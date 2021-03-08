@@ -24,13 +24,46 @@ exports.config = {
     },
 
     onPrepare: function() {
+
+        var MailListener = require("mail-listener2");
+
+        // here goes your email connection configuration
+        var mailListener = new MailListener({
+            username: "marginedgetest20@gmail.com",
+            password: "Test@12345",
+            host: "imap.gmail.com",
+            port: 993, // imap port 
+            tls: true,
+            tlsOptions: { rejectUnauthorized: false },
+            mailbox: "INBOX", // mailbox to monitor 
+            searchFilter: ["UNSEEN", "FLAGGED"], // the search filter being used after an IDLE notification has been retrieved 
+            markSeen: false, // all fetched email willbe marked as seen and not fetched next time 
+            fetchUnreadOnStart: true, // use it only if you want to get all unread email on lib start. Default is `false`, 
+            mailParserOptions: { streamAttachments: true }, // options to be passed to mailParser lib. 
+            attachments: true, // download attachments as they are encountered to the project directory 
+            attachmentOptions: { directory: "attachments/" } // specify a download directory for attachments 
+        });
+
+        mailListener.start();
+
+        mailListener.on("server:connected", function() {
+            console.log("Mail listener initialized");
+        });
+
+        global.mailListener = mailListener;
+
+
         // Add a screenshot reporter and store screenshots to `/tmp/screenshots`:
         jasmine.getEnv().addReporter(new HtmlReporter({
             baseDirectory: 'reports',
             takeScreenShotsForSkippedSpecs: true,
             takeScreenShotsOnlyForFailedSpecs: true
         }).getJasmine2Reporter());
-    }
+    },
+
+    onCleanUp: function() {
+        mailListener.stop();
+    },
 
 
 
