@@ -24,8 +24,9 @@ exports.config = {
     },
 
     onPrepare: function() {
+        browser.manage().window().maximize();
 
-        var MailListener = require("mail-listener2");
+      /*  var MailListener = require("mail-listener2");
 
         // here goes your email connection configuration
         var mailListener = new MailListener({
@@ -50,7 +51,36 @@ exports.config = {
             console.log("Mail listener initialized");
         });
 
-        global.mailListener = mailListener;
+        // mailListener.on("mail", function(mail, seqno, attributes) {
+        //     // do something with mail object including attachments
+        //     console.log("emailParsed", mail);
+        //     // mail processing code goes here
+        // });
+
+        // mailListener.start();
+
+        // mailListener.on("server:connected", function() {
+        //     console.log("Mail listener initialized");
+        // });
+
+        // // mailListener.on("mail", function(mail, seqno, attributes) {
+        // //     // do something with mail object including attachments
+        // //     console.log("emailParsed", mail);
+        // //     // mail processing code goes here
+        // // });
+
+        // mailListener.on("server:disconnected", function() {
+        //     console.log("imapDisconnected");
+        // });
+
+        // mailListener.on("error", function(err) {
+        //     console.log('MailListener error: ' + err);
+        //     reject(err);
+        // });
+
+        // global.mailListener = mailListener;
+
+        */
 
 
         // Add a screenshot reporter and store screenshots to `/tmp/screenshots`:
@@ -62,7 +92,7 @@ exports.config = {
     },
 
     onCleanUp: function() {
-        mailListener.stop();
+       // mailListener.stop();
     },
 
 

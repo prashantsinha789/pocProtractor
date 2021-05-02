@@ -17,14 +17,14 @@ var marginEdgeOrderPage = function() {
     this.okBtnWithClass = element(by.css('.btn.btn-primary.bootbox-accept'))
     this.bulkInitialReview = element(by.css('button[href*="#/order/bulkIR"]'));
     this.searchValue = element(by.model('filterValue'));
-    this.startBulkReview = element(by.css('[ng-click="startIR()"]'));
-    this.startBulkReviewOK = element(by.css('[ng-click = "howManyBulkIRModalOk()"]'));
+    this.startBulkReview = element.all(by.css('.btn.btn-md.btn-success')).get(0);
+    this.startBulkReviewOK = element(by.css('[ng-click = "howManyBulkModalOk()"]'));
     this.selectVendor = element(by.css('[ng-change = "selectVendor()"]'));
     this.enterVendorName = element(by.css('input[placeholder="Select a vendor..."]'));
     this.selectItemFromDD = element(by.css('.ui-select-highlight'));
     this.enterInvoice = element(by.model('order.initialReviewInvoiceNum'));
     this.enterInvoiceAnalyst2 = element(by.model('order.invoiceNum'));
-    this.clickCalAsAnalyst = element(by.model('order.initialReviewInvoiceDate'));
+    this.clickCalAsAnalyst = element.all(by.model('order.initialReviewInvoiceDate')).get(0);
     this.clickCalAsAnalyst2 = element(by.model('order.invoiceDate'));
     this.selectDateIR = element.all(by.css('.btn.btn-default.btn-sm')).get(14);
     this.noAddress = element(by.cssContainingText('label', 'No address is provided on the invoice.'));
@@ -43,7 +43,7 @@ var marginEdgeOrderPage = function() {
     this.verifyBtn = element(by.css('[ng-click="verifyOrderAndClose()"]'));
     this.addLineItem = element(by.css('[ng-click="addRow()"]'));
     this.selectNewVendorItemRadio = element(by.cssContainingText('label', 'New Vendor Item'));
-    this.vendorItemVerified = element(by.cssContainingText('label', 'Vendor Item Verified'));
+    this.vendorItemVerified = element(by.cssContainingText('label', ' Vendor Item Verified '));
     this.vendorInfoVerified = element(by.cssContainingText('label', 'Vendor Information Verified'));
     this.itemCode = element(by.css('#provisionalProductCode'));
     this.enterVendorItem = element.all(by.model('newReconcileLineItem.vendorProduct.name')).get(1);
@@ -93,7 +93,7 @@ var marginEdgeOrderPage = function() {
     }
 
     this.startInitialReview = async function() {
-        await this.bulkInitialReview.click();
+        // await this.bulkInitialReview.click();
         await this.searchValue.sendKeys("Tysons");
         await this.selectItemFromList.click();
         await this.startBulkReview.click();
@@ -169,6 +169,7 @@ var marginEdgeOrderPage = function() {
     }
 
     this.completeInitialReviewAsAnalyst = async function(vendorName, invoiceName) {
+        browser.sleep(5000)
         helper.waitElementToBeClickable(this.selectVendor);
         await this.selectVendor.click();
         helper.waitUntilReady(this.enterVendorName)
@@ -179,10 +180,10 @@ var marginEdgeOrderPage = function() {
         await this.clickCalAsAnalyst.click();
         helper.waitUntilReady(this.selectDateIR)
         await this.selectDateIR.click();
-        helper.waitUntilReady(this.noAddress)
-        await this.noAddress.click();
-        helper.waitUntilReady(this.noPhone)
-        await this.noPhone.click();
+       helper.waitUntilReady(this.noAddress)
+       await this.noAddress.click();
+       helper.waitUntilReady(this.noPhone)
+       await this.noPhone.click();
         helper.waitUntilReady(this.verifiedTotal)
         await this.verifiedTotal.sendKeys("108");
         helper.waitElementToBeClickable(this.handwrittenDD)
@@ -203,6 +204,7 @@ var marginEdgeOrderPage = function() {
     }
 
     this.completeReconcillationAsAnalyst2 = async function(vendorName, invoiceName) {
+        browser.sleep(4000)
         helper.waitElementToBeClickable(this.selectVendor);
         await this.selectVendor.click();
         helper.waitUntilReady(this.enterVendorName)
@@ -232,22 +234,23 @@ var marginEdgeOrderPage = function() {
     }
 
     this.addLineItemLeadAnalyst = async function() {
+        var randomId=+Math.floor((Math.random() * 100000) + 1);
         helper.waitElementToBeClickable(this.addLineItem);
         await this.addLineItem.click();
         browser.driver.sleep(1000);
         await this.selectNewVendorItemRadio.click();
         helper.waitUntilReady(this.itemCode)
-        await this.itemCode.sendKeys("99");
+        await this.itemCode.sendKeys(randomId);
         // helper.waitElementToBeClickable(this.enterVendorItem);
         await this.enterVendorItem.click();
         helper.waitUntilReady(this.enterVendorItem)
-        await this.enterVendorItem.sendKeys("TestLineItem41");
+        await this.enterVendorItem.sendKeys("TestLineItem"+randomId);
         helper.waitElementToBeClickable(this.clickProductDDLineItem);
         await this.clickProductDDLineItem.click();
         helper.waitUntilReady(this.enterProdName);
         await this.enterProdName.sendKeys("Bud");
         await this.selectItemFromDD.click();
-        await this.addCategoryStr.sendKeys("Test41");
+        await this.addCategoryStr.sendKeys("Test51");
         await this.addQuantStr.sendKeys("1000");
         helper.waitElementToBeClickable(this.addUnitClick);
         await this.addUnitClick.click();

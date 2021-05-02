@@ -27,15 +27,24 @@ var Helper = function() {
         browser.wait(this.EC.elementToBeClickable(elm), 15000);
     };
 
-    this.getLastEmail = function() {
-        var deferred = protractor.promise.defer();
-        console.log("Waiting for an email...");
+    // this.getLastEmail = function() {
+    //     var deferred = protractor.promise.defer();
+    //     console.log("Waiting for an email...");
 
-        mailListener.on("mail", function(mail) {
-            deferred.fulfill(mail);
-        });
-        return deferred.promise;
-    };
+    //     const globalAny = global;
+
+    //     globalAny.mailListener.on('mail', function(mail, seqno, attributes) {
+    //         console.log(`Received: ${mail.subject}`);
+    //         deferred.fulfill(mail);
+    //     });
+    //     return deferred.promise;
+
+    //     // mailListener.on("mail", function(mail) {
+    //     //     deferred.fulfill(mail);
+    //     // });
+    //     // return deferred.promise;
+    // };
+
 
 }
 module.exports = Helper;
